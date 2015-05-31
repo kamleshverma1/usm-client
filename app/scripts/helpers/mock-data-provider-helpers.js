@@ -29,6 +29,15 @@
                 outbound : 327 
             }
         };
+
+        // When volume name will not match with any exist object , than this will be by default volume.
+        var byDefaultVolume = {
+            volume_name : "default" ,
+            description : 'default desc' ,
+            alerts : 0 ,
+            areaSpline_values : [ { '1': 5 }, { '1': 9 }, { '1': 50 }, { '1': 30 }, { '1': 80 }] 
+        };
+
         // Mock clusters with hard coded data.
         var mockClusters = [
             {
@@ -84,6 +93,23 @@
                 }
             }
         ];
+
+        // Mock volumes with hard coded data.
+        var mockVolumes = [
+            {
+               volume_name : "v1" ,
+               description : 'v1 desc' ,
+               alerts : 1 ,
+               areaSpline_values : [ { '1': 3 }, { '1': 15 }, { '1': 20 }, { '1': 80 }, { '1': 30 }] 
+            },
+            {
+               volume_name : "v2" ,
+               description : 'v2 desc' ,
+               alerts : 0 ,
+               areaSpline_values : [ { '1': 8 }, { '1': 10 }, { '1': 50 }, { '1': 90 }, { '1': 10 }] 
+            }
+        ];
+
         // **@returns** a cluster object with the cluster name for the specific
         function getMockCluster(cluster_name) {
             var tempCluster =  _.find(mockClusters, function(cluster) {
@@ -92,8 +118,18 @@
             return tempCluster === undefined ? byDefaultCluster : tempCluster;
         }
 
+        // **@returns** a volume object with the volume name for the specific
+        function getMockVolume(volume_name) {
+            var tempVolume =  _.find(mockVolumes, function(volume) {
+                    return volume.volume_name === volume_name;
+            });
+            return tempVolume === undefined ? byDefaultVolume : tempVolume;
+        }
+
+
         return {
-            getMockCluster: getMockCluster
+            getMockCluster: getMockCluster,
+            getMockVolume: getMockVolume
         };
     });
 })();
